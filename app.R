@@ -13,7 +13,7 @@ linebreaks <- function(n) {
 }
 
 setwd(here::here())
-source("existing-app/helpers.R")
+source("helpers.R")
 
 ui <- fluidPage(
   theme = shinytheme("slate"),
@@ -40,10 +40,10 @@ ui <- fluidPage(
     ),
     mainPanel(
       tabsetPanel(
-        tabPanel("Tree Plot", plotlyOutput("p_tree", height = "40vh") %>% shinycssloaders::withSpinner(color = "#0dc5c1")),
-        tabPanel("Incidence Plot", plotOutput("p_incidence", height = "30vh") %>% shinycssloaders::withSpinner(color = "#0dc5c1")),
-        tabPanel("Matrices Plot", plotOutput("p_matrices", height = "30vh") %>% shinycssloaders::withSpinner(color = "#0dc5c1")),
-        tabPanel("Results Plot", plotOutput("p_results", height = "30vh"))
+        tabPanel("Tree Plot", plotlyOutput("p_tree", height = "100vh") %>% shinycssloaders::withSpinner(color = "#0dc5c1")),
+        tabPanel("Incidence Plot", plotOutput("p_incidence", height = "100vh")),
+        tabPanel("Matrices Plot", plotOutput("p_matrices", height = "100vh")),
+        tabPanel("Results Plot", plotOutput("p_results", height = "100vh"))
       )
     )
   )
@@ -135,7 +135,7 @@ server <- function(input, output) {
     param_info <- out()$param_info
     p_Ri <- p_Ri(data, param_info)
     p_mixing <- p_mixing(data, param_info)
-    p_matrices <- patchwork::wrap_plots(p_Ri, p_mixing)
+    p_matrices <- patchwork::wrap_plots(p_Ri, p_mixing, nrow = 2)
     p_matrices
   })
   
